@@ -1,0 +1,34 @@
+{
+    "TWITTER_BEARER_TOKEN": "BEARER_TOKEN",
+    "CRYPTOS": {
+        "Bitcoin": {
+            "keywords": [
+                "bitcoin",
+                "btc"
+            ]
+        },
+        "Ethereum": {
+            "keywords": [
+                "ethereum",
+                "eth",
+                "ether"
+            ]
+        },
+        "Dogecoin": {
+            "keywords": [
+                "doge",
+                "dogecoin",
+                "Ðoge",
+                "Ðogecoin"
+            ]
+        },
+        "Cardano": {
+            "keywords": [
+                "ada",
+                "cardano",
+                "iohk"
+            ]
+        }
+    },
+    "FCM_TOKEN_REGISTRAR_PORT": "5674"
+}
