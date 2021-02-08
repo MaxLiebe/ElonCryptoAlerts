@@ -4,7 +4,8 @@
   "description": "Get a notification every time Elon tweets about crypto!",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "plesk-npm-install": "npm install --scripts-prepend-node-path"
   },
   "repository": {
     "type": "git",
