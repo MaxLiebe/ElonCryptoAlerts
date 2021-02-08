@@ -6,7 +6,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "firebase-admin": "^9.4.2",
-    "needle": "^2.6.0"
+    "needle": "^2.6.0",
+    "protobufjs": "^6.10.2"
   },
   "devDependencies": {},
   "scripts": {
