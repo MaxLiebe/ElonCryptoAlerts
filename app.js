@@ -5,7 +5,7 @@ const firebaseAdmin = require('firebase-admin');
 const config = require('./config.json');
 
 const app = express();
-const port = config.FCM_TOKEN_REGISTRAR_PORT || 443;
+const port = process.env.PORT || 8000;
 
 const serviceAccount = require('./firebase-service-key.json');
 firebaseAdmin.initializeApp({ credential: firebaseAdmin.credential.cert(serviceAccount) });

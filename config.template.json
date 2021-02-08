@@ -29,6 +29,5 @@
                 "iohk"
             ]
         }
-    },
-    "FCM_TOKEN_REGISTRAR_PORT": "5674"
+    }
 }
