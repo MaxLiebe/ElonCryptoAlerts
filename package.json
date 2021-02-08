@@ -1,15 +1,8 @@
 {
   "name": "eloncryptoalert",
   "version": "1.0.0",
-  "description": "Get a notification on your phone when Elon tweets about crypto!",
+  "description": "Get a notification every time Elon tweets about crypto!",
   "main": "app.js",
-  "dependencies": {
-    "express": "^4.17.1",
-    "firebase-admin": "^9.4.2",
-    "needle": "^2.6.0",
-    "protobufjs": "^6.10.2"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,10 +10,15 @@
     "type": "git",
     "url": "git+https://github.com/MaxLiebe/ElonCryptoAlerts.git"
   },
-  "author": "Max Liebe",
+  "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/MaxLiebe/ElonCryptoAlerts/issues"
   },
-  "homepage": "https://github.com/MaxLiebe/ElonCryptoAlerts#readme"
+  "homepage": "https://github.com/MaxLiebe/ElonCryptoAlerts#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "firebase-admin": "^9.4.2",
+    "needle": "^2.6.0"
+  }
 }
