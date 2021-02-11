@@ -22,7 +22,8 @@ const { CreateTwitterStream } = require('./TwitterStream');
             try {
                 const json = JSON.parse(data);
                 const cryptos = json.matching_rules.map(rule => rule.tag);
-                broadcastNewTweet(cryptos);
+                const url = `https://twitter.com/ImAmalox/status/${json.data.id}`;
+                broadcastNewTweet(url, cryptos);
             } catch (e) {
                 // Keep alive signal received. Do nothing.
             }
@@ -50,17 +51,20 @@ app.get('/register/:token', async (req, res) => {
     }
 });
 
-const broadcastNewTweet = cryptos => {
+const broadcastNewTweet = (tweetUrl, cryptos) => {
     console.log('Got tweet! Broadcasting notification...');
+    console.log(`Tweet URL: ${tweetUrl}`);
     const message = {
         notification: {
             title: 'Elon Musk just tweeted about crypto!',
-            body: `Mentioned crypto(s): ${cryptos.toNotificationSyntax()}`
-        }
+            body: `Mentioned crypto(s): ${cryptos.toNotificationSyntax()}`,
+            click_action: 'action.open.tweet',
+        },
+        data: { tweetUrl }
     };
     const options = {
         priority: "high",
-        timeToLive: 60 * 60 * 2
+        timeToLive: 60 * 60 * 2,
     };
     notificationService.sendToTopic('updates', message, options);
 }
