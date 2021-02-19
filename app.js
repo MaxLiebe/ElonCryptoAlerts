@@ -55,6 +55,10 @@ const broadcastNewTweet = (tweetUrl, cryptos) => {
     console.log('Got tweet! Broadcasting notification...');
     console.log(`Tweet URL: ${tweetUrl}`);
     let isGeneral = (cryptos.length === 1 && cryptos.includes('General'));
+    let generalIndex = array.indexOf('General');
+    if (generalIndex !== -1) {
+        cryptos.splice(generalIndex, 1);
+    }
     const message = {
         notification: {
             title: 'Elon Musk just tweeted about crypto!',
