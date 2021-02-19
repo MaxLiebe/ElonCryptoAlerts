@@ -54,10 +54,11 @@ app.get('/register/:token', async (req, res) => {
 const broadcastNewTweet = (tweetUrl, cryptos) => {
     console.log('Got tweet! Broadcasting notification...');
     console.log(`Tweet URL: ${tweetUrl}`);
+    let isGeneral = (cryptos.length === 1 && cryptos.includes('General'));
     const message = {
         notification: {
             title: 'Elon Musk just tweeted about crypto!',
-            body: `Mentioned crypto(s): ${cryptos.toNotificationSyntax()}`,
+            body: getNotificationBodyMessage(isGeneral, cryptos),
             click_action: 'action.open.tweet',
         },
         data: { tweetUrl }
@@ -67,6 +68,14 @@ const broadcastNewTweet = (tweetUrl, cryptos) => {
         timeToLive: 60 * 60 * 2,
     };
     notificationService.sendToTopic('updates', message, options);
+}
+
+const getNotificationBodyMessage = (general, cryptos) => {
+    if (general) {
+        return 'No specific crypto mentioned.';
+    } else {
+        return `Mentioned crypto(s): ${cryptos.toNotificationSyntax()}`;
+    }
 }
 
 app.listen(port, () => {

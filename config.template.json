@@ -1,6 +1,14 @@
 {
     "TWITTER_BEARER_TOKEN": "BEARER_TOKEN",
     "CRYPTOS": {
+        "General": {
+            "keywords": [
+                "crypto",
+                "cryptocurrency",
+                "cryptos",
+                "cryptocurrencies"
+            ]
+        },
         "Bitcoin": {
             "keywords": [
                 "bitcoin",
