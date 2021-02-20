@@ -22,7 +22,7 @@ const { CreateTwitterStream } = require('./TwitterStream');
             try {
                 const json = JSON.parse(data);
                 const cryptos = json.matching_rules.map(rule => rule.tag);
-                const url = `https://twitter.com/ImAmalox/status/${json.data.id}`;
+                const url = `https://twitter.com/elonmusk/status/${json.data.id}`;
                 broadcastNewTweet(url, cryptos);
             } catch (e) {
                 // Keep alive signal received. Do nothing.
@@ -55,7 +55,7 @@ const broadcastNewTweet = (tweetUrl, cryptos) => {
     console.log('Got tweet! Broadcasting notification...');
     console.log(`Tweet URL: ${tweetUrl}`);
     let isGeneral = (cryptos.length === 1 && cryptos.includes('General'));
-    let generalIndex = array.indexOf('General');
+    let generalIndex = cryptos.indexOf('General');
     if (generalIndex !== -1) {
         cryptos.splice(generalIndex, 1);
     }
@@ -69,7 +69,7 @@ const broadcastNewTweet = (tweetUrl, cryptos) => {
     };
     const options = {
         priority: "high",
-        timeToLive: 60 * 60 * 2,
+        timeToLive: 60 * 60 * 4,
     };
     notificationService.sendToTopic('updates', message, options);
 }
