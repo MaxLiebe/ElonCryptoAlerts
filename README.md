@@ -1,4 +1,4 @@
-# Elon Musk crypto Twitter alerts
+# Elon Crypto Alerts
 
 ## Get a notification every time Elon Musk tweets about a certain crypto!
 
