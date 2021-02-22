@@ -37,5 +37,9 @@
                 "iohk"
             ]
         }
-    }
+    },
+    "BINANCE_API_KEY": "BINANCE API KEY",
+    "BINANCE_SECRET_KEY": "BINANCE SECRET KEY",
+    "TARGET_PRICE": "100",
+    "LEVERAGE": "50"
 }

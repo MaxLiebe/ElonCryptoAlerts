@@ -14,6 +14,12 @@ const firestore = firebaseAdmin.firestore();
 
 const { CreateTwitterStream } = require('./TwitterStream');
 
+const Binance = require('node-binance-api');
+const binance = new Binance().options({
+    APIKEY: config.BINANCE_API_KEY,
+    APISECRET: config.BINANCE_SECRET_KEY
+});
+
 (async () => {
     try {
         const stream = await CreateTwitterStream(config.CRYPTOS, config.TWITTER_BEARER_TOKEN);
@@ -51,7 +57,7 @@ app.get('/register/:token', async (req, res) => {
     }
 });
 
-const broadcastNewTweet = (tweetUrl, cryptos) => {
+const broadcastNewTweet = async (tweetUrl, cryptos) => {
     console.log('Got tweet! Broadcasting notification...');
     console.log(`Tweet URL: ${tweetUrl}`);
     let isGeneral = (cryptos.length === 1 && cryptos.includes('General'));
@@ -72,6 +78,30 @@ const broadcastNewTweet = (tweetUrl, cryptos) => {
         timeToLive: 60 * 60 * 4,
     };
     notificationService.sendToTopic('updates', message, options);
+
+    //holy fuck this is a dumb idea. but fuck it.
+    if (!isGeneral) {
+        let ticker;
+        let decimals = 2;
+        switch (cryptos[0]) {
+            case "Bitcoin": ticker = "BTCUSDT"; break;
+            case "Ethereum": ticker = "ETHUSDT"; break;
+            case "Dogecoin": ticker = "DOGEUSDT"; decimals = 0; break;
+            case "Cardano": ticker = "ADAUSDT"; decimals = 0; break;
+            default: return;
+        }
+
+        let targetCost = parseFloat(config.TARGET_PRICE);
+        let leverage = parseInt(config.LEVERAGE);
+        let price = (await binance.futuresPrices())[ticker];
+        let amountToBuy = (targetCost * leverage / price).toFixed(decimals);
+        await binance.futuresLeverage(ticker, leverage);
+        await binance.futuresMarginType(ticker, 'CROSSED');
+        await binance.futuresMarketBuy(ticker, amountToBuy);
+        setTimeout(async () => {
+            await binance.futuresMarketSell(ticker, amountToBuy);
+        }, parseInt(config.EXIT_POSITION_COUNTDOWN) * 1000);
+    }
 }
 
 const getNotificationBodyMessage = (general, cryptos) => {
