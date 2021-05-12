@@ -14,7 +14,7 @@ const firestore = firebaseAdmin.firestore();
 
 const { CreateTwitterStream } = require('./TwitterStream');
 
-(async () => {
+const initTwitterStream = async () => {
     try {
         const stream = await CreateTwitterStream(config.CRYPTOS, config.TWITTER_BEARER_TOKEN);
 
@@ -25,7 +25,11 @@ const { CreateTwitterStream } = require('./TwitterStream');
                 const url = `https://twitter.com/elonmusk/status/${json.data.id}`;
                 broadcastNewTweet(url, cryptos);
             } catch (e) {
-                // Keep alive signal received. Do nothing.
+                if ((data.title && data.title === "ConnectionException") || data.errors) {
+                    initTwitterStream();
+                } else {
+                    // Keep alive signal received. Do nothing.
+                }
             }
         }).on('error', error => {
             throw error;
@@ -35,7 +39,7 @@ const { CreateTwitterStream } = require('./TwitterStream');
         console.log(error);
         process.exit(1);
     }
-})();
+}
 
 app.get('/register/:token', async (req, res) => {
     const token = req.params.token;
@@ -84,6 +88,7 @@ const getNotificationBodyMessage = (general, cryptos) => {
 
 app.listen(port, () => {
     console.log(`Token registration service listening on port ${port}`)
+    initTwitterStream();
 });
 
 Array.prototype.toNotificationSyntax = function () {
